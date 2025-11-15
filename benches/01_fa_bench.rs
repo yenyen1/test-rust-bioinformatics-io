@@ -1,7 +1,6 @@
 use test_parser::utils::{NCount, open_bufreader};
 
 use std::hint::black_box;
-use std::time::Duration;
 
 use bio::io::fasta as bio_fa;
 use criterion::{Criterion, criterion_group, criterion_main};
@@ -14,7 +13,6 @@ const SR_PATH_GZ: &str = "data/SR_10000.fa.gz";
 
 fn bench_lrfa_parser(c: &mut Criterion) {
     let mut group = c.benchmark_group("LRFA parser");
-    // group.measurement_time(Duration::from_secs(15));
     group.sample_size(100);
 
     group.bench_function("bio", |b| b.iter(|| bio_parse(black_box(LR_PATH))));
@@ -28,7 +26,6 @@ fn bench_lrfa_parser(c: &mut Criterion) {
 
 fn bench_srfa_parser(c: &mut Criterion) {
     let mut group = c.benchmark_group("SRFA parser");
-    // group.measurement_time(Duration::from_secs(15));
     group.sample_size(100);
 
     group.bench_function("bio", |b| b.iter(|| bio_parse(black_box(SR_PATH))));

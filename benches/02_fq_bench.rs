@@ -1,7 +1,6 @@
 use test_parser::utils::{NCount, open_bufreader};
 
 use std::hint::black_box;
-use std::time::Duration;
 
 use bio::io::fastq as bio_fq;
 use criterion::{Criterion, criterion_group, criterion_main};
@@ -14,13 +13,10 @@ const SR_PATH_GZ: &str = "data/SR_10000.fq.gz";
 
 fn bench_lrfq_parser(c: &mut Criterion) {
     let mut group = c.benchmark_group("LRFQ parser");
-    // group.measurement_time(Duration::from_secs(20));
     group.sample_size(100);
 
     group.bench_function("bio", |b| b.iter(|| bio_parse(black_box(LR_PATH))));
-    group.bench_function("noodles", |b| {
-        b.iter(|| noodles_parse(black_box(LR_PATH)))
-    });
+    group.bench_function("noodles", |b| b.iter(|| noodles_parse(black_box(LR_PATH))));
     group.bench_function("bio_gz", |b| b.iter(|| bio_parse(black_box(LR_PATH_GZ))));
     group.bench_function("noodles_gz", |b| {
         b.iter(|| noodles_parse(black_box(LR_PATH_GZ)))
@@ -30,13 +26,10 @@ fn bench_lrfq_parser(c: &mut Criterion) {
 
 fn bench_srfq_parser(c: &mut Criterion) {
     let mut group = c.benchmark_group("SRFQ parser");
-    // group.measurement_time(Duration::from_secs(20));
     group.sample_size(100);
 
     group.bench_function("bio", |b| b.iter(|| bio_parse(black_box(SR_PATH))));
-    group.bench_function("noodles", |b| {
-        b.iter(|| noodles_parse(black_box(SR_PATH)))
-    });
+    group.bench_function("noodles", |b| b.iter(|| noodles_parse(black_box(SR_PATH))));
     group.bench_function("bio_gz", |b| b.iter(|| bio_parse(black_box(SR_PATH_GZ))));
     group.bench_function("noodles_gz", |b| {
         b.iter(|| noodles_parse(black_box(SR_PATH_GZ)))
