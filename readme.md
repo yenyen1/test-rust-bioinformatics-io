@@ -10,7 +10,7 @@ Compare the following I/O libraries published on crates.io.
 
 ## Dataset
 
-This repository use sequencing data from NIST's Genome in a Bottle (GIAB) project. AshkenazimTrio son (HG002). 
+This repository use sequencing data from Genome in a Bottle (GIAB) project. AshkenazimTrio son (HG002). 
 - **GIAB**: https://ftp.ncbi.nlm.nih.gov/ReferenceSamples/giab/data/AshkenazimTrio/HG002_NA24385_son/
 
 
