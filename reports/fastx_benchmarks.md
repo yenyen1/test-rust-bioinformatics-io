@@ -58,11 +58,14 @@ This report summarizes the performance benchmarks for the project using `Criteri
 
 |  | Env1 | Env2 |
 |------|-------|-------|
-| CPU | Apple M1 Pro  |  |
-| RAM | 16 GB (LPDDR5) |  |
-| OS | macOS Sequoia 15.6.1  |  |
-| Rust Version  | 1.89.0  | |
-| Criterion Version  | 0.7.0  |  |
+| CPU Model | Apple M1 Pro | AMD Ryzen 5 5560U with Radeon Graphics |
+| CPU Cores/Tgreads | 8/8 (6p+2e) | 6/2 |
+| CPU Architecture | ARM64 | x86_64 |
+| Memory | 16 GB (LPDDR5) | 8G + 16 GB (DDR4) 3200 MT/s |
+| Storage | 494.38 GB (APPLE SSD AP0512R) | 512 GB (INTEL SSDPEKNU512GZ) NVMe PCIe |
+| OS | macOS Sequoia 15.6.1  | Ubuntu 22.04.5 |
+| Rust Version  | 1.89.0  | 1.91.1 |
+| Criterion Version  | 0.7.0  | 0.7.0 |
 
 ## Result 1: FASTA data
 
@@ -80,11 +83,25 @@ Configure `Criterion` with a `sample_size` (number of iterations) of 30 for this
 | env1 | SR | bio:io | gz | 6.9366 s | 33.007 ms | 6.9267 s | 42.735 ms |
 | env1 | SR | noodles | - | 4.2773 s | 95.159 ms | 4.3037 s | 97.323 ms |
 | env1 | SR | noodles | gz | 8.6527 s | 36.053 ms | 8.6564 s | 37.001 ms |
+| env2 | LR | bio:io | - | 419.00 ms | 3.7700 ms | 417.87 ms |  414.20 µs |
+| env2 | LR | bio:io | gz | 2.2982 s | 3.2129 ms | 2.2972 s | 332.83 µs |
+| env2 | LR | noodles | - | 396.37 ms | 3.6894 ms | 395.44 ms | 327.80 µs |
+| env2 | LR | noodles | gz | 2.2045 s | 3.7695 ms | 2.2029 s | 376.05 µs |
+| env2 | SR | bio:io | - | 1.5070 s | 2.5284 ms | 1.5062 s | 814.41 µs |
+| env2 | SR | bio:io | gz | 4.2002 s | 2.4028 ms | 4.2002 s | 555.40 µs |
+| env2 | SR | noodles | - | 2.6323 s | 5.5215 ms | 2.6347 s | 4.5802 ms |
+| env2 | SR | noodles | gz |  5.2459 s | 12.452 ms | 5.2475 s | 15.822 ms |
 
 ### Violin Plot
+- Environment 1
 
-![LR_FASTA](plots/violin_LRFA.svg)
-![SR_FASTA](plots/violin_SRFA.svg)
+    ![LR_FASTA](plots/env1_violin_LRFA.svg)
+    ![SR_FASTA](plots/env1_violin_SRFA.svg)
+
+- Environment 2
+
+    ![LR_FASTA](plots/env2_violin_LRFA.svg)
+    ![SR_FASTA](plots/env2_violin_SRFA.svg)
 
 ## Result 2: FASTQ data
 
@@ -99,22 +116,27 @@ Configure `Criterion` with a `sample_size` (number of iterations) of 30 for this
 | env1 | SR | bio:io | gz | 13.455 s | 35.220 ms | 13.447 s | 23.869 ms |
 | env1 | SR | noodles | - | 2.9467 s | 19.552 ms | 2.9448 s | 16.888 ms |
 | env1 | SR | noodles | gz | 12.851 s | 28.525 ms | 12.849 s | 20.484 ms |
-| env2 | LR | bio:io | - |  |  |  |  |
-| env2 | LR | bio:io | gz |  |  |  |  |
-| env2 | LR | noodles | - |  |  |  |  |
-| env2 | LR | noodles | gz |  |  |  |  |
-| env2 | SR | bio:io | - |  |  |  |  |
-| env2 | SR | bio:io | gz |  |  |  |  |
-| env2 | SR | noodles | - |  |  |  |  |
-| env2 | SR | noodles | gz |  |  |  |  |
+| env2 | LR | bio:io | - | 779.72 ms | 4.2280 ms | 778.94 ms | 702.97 µs |
+| env2 | LR | bio:io | gz | 6.5685 s | 2.4057 ms | 6.5676 s | 1.6872 ms |
+| env2 | LR | noodles | - | 706.56 ms | 5.1516 ms | 705.34 ms | 216.01 µs |
+| env2 | LR | noodles | gz | 6.5323 s | 3.4865 ms | 6.5313 s | 1.6310 ms |
+| env2 | SR | bio:io | - | 2.3151 s | 8.1311 ms | 2.3160 s | 1.9802 ms |
+| env2 | SR | bio:io | gz | 8.4290 s | 3.2871 ms | 8.4287 s | 2.9692 ms |
+| env2 | SR | noodles | - | 1.7345 s | 6.5779 ms | 1.7359 s | 6.7096 ms |
+| env2 | SR | noodles | gz | 7.8239 s | 4.6098 ms | 7.8227 s | 2.1434 ms |
 
 
 ### Violin Plot
 
 - Environment 1
 
-    ![LR_FASTQ](plots/violin_LRFQ.svg)
-    ![SR_FASTQ](plots/violin_SRFQ.svg)
+    ![LR_FASTQ](plots/env1_violin_LRFQ.svg)
+    ![SR_FASTQ](plots/env1_violin_SRFQ.svg)
+
+- Environment 2
+
+    ![LR_FASTQ](plots/env2_violin_LRFQ.svg)
+    ![SR_FASTQ](plots/env2_violin_SRFQ.svg)
 
 
 
