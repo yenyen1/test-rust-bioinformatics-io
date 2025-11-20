@@ -1,8 +1,10 @@
 # FASTX I/O Benchmark Report
 
 This report summarizes the performance benchmarks for the project using `Criterion.rs`.
+Benchmark the performance of reading a FASTX file consecutively. 
 
-## FASTQ/FASTA libs
+
+## FASTX libraries
 
 - **bio**: bio::io v3.0.0
 - **noodles**: 
@@ -28,6 +30,11 @@ This report summarizes the performance benchmarks for the project using `Criteri
     # Sampling SR dataset with sample fraction 0.2
     seqtk_rs sample -I ${FASTQ} --random-seed 11 -f 0.2 | gzip > ${SUBSET_FQ}
 
+    # Calculate FASTA/FASTQ statistics
+    # Output: #seq, #bases, avg_size, min_size, med_size, max_size, N50
+    seqtk_rs size -A ${FASTA}
+    seqtk_rs size -I ${FASTQ}
+
     ```
 
 - The stats of subsets:
@@ -45,16 +52,8 @@ This report summarizes the performance benchmarks for the project using `Criteri
 
     ```
 
-- Check Files by `seqtk_rs`
 
-    ```
-    # Output: #seq, #bases, avg_size, min_size, med_size, max_size, N50
-    seqtk_rs size -A ${FASTA}
-    seqtk_rs size -I ${FASTQ}
-
-    ```
-
-## Benchmark Environment
+## Environment
 
 |  | Env1 | Env2 |
 |------|-------|-------|
@@ -140,4 +139,4 @@ Configure `Criterion` with a `sample_size` (number of iterations) of 30 for this
 
 
 
-## Conclusions
+## Conclusion
