@@ -16,7 +16,7 @@ Compare the following I/O libraries published on `crates.io`:
 - **kseq**: https://crates.io/crates/kseq (FASTA/FASTQ)
 - **noodles**: https://crates.io/crates/noodles (FASTA/FASTQ, SAM/BAM/CRAM, VCF/BCF)
 - **rust-htslib**: https://crates.io/crates/rust-htslib (FASTA, SAM/BAM/CRAM, VCF/BCF)
-- **bam**: https://crates.io/crates/bam (BAM) multi-threads
+- **bam**: https://crates.io/crates/bam (BAM)
 
 
 ## Dataset

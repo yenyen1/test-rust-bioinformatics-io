@@ -6,7 +6,7 @@ Benchmark the performance of reading a BAM file consecutively.
 ## BAM I/O libraries
 
 | Crate |   | Version | Indexed Reader | RecordBuffer | Pileup | Multi-Thread Modes | Async |
-|:-----:|:-:|:-------:|:--------------:|:------------:|:------:|:-------------------:|:-----:|
+|:-----:|:-:|:-------:|:--------------:|:------------:|:------:|:------------------:|:-----:|
 | rust-htslib::bam | HTSlib bindings | v0.51.0 | V | V | V |  |  |
 | noodles-bam | Pure Rust | v0.84.0 | V | V |  |  | V |
 | bam | Pure Rust | v0.1.4 | V |  | V | V |  |
@@ -30,6 +30,9 @@ Benchmark the performance of reading a BAM file consecutively.
     # Sampling SR dataset with sample fraction 0.01
     samtools view --subsample 0.01 --subsample-seed 11 -b ${BAM} > ${SUBSET_BAM}
 
+    # Sampling LR dataset with sample fraction 0.01
+    samtools view --subsample 0.005 --subsample-seed 11 -b ${BAM} > ${SUBSET_BAM}
+
     # Indexing BAM
     samtools index ${SUBSET_BAM}
 
@@ -38,10 +41,11 @@ Benchmark the performance of reading a BAM file consecutively.
 
     ```
 - The stats of subsets:
+
     | Read | Subset Name | File Size | #Sequences | #Reads mapped | #Reads unmapped | #Reads duplicated | #Reads MQ0 |
     |:----:|:-----------:|:---------:|:----------:|:-------------:|:---------------:|:-----------------:|:----------:|
-    | SR | HG002.GRCh38.2x250.bam | 1.6G | 8,835,692 | 8,240,838 | 594,854 | 0 | 642 |
-
+    | SR | HG002.GRCh38.2x250_subset.bam | 1.6G | 8,835,692 | 8,240,838 | 594,854 | 0 | 642 |
+    | LR | HG002_GRCh38_ONT-UL_UCSC_20200508.phased.subset.bam | 860M | 96,057 | 37,464 | 58,593 | 0 | 219 |
 
 ## Environment
 

@@ -1,11 +1,9 @@
-use test_parser::utils::{NCount, open_bufreader};
+use test_parser::fastq_parser::{bio_parse, fastq_parallel_parse, fastq_parse, noodles_parse};
 
+use criterion::{Criterion, criterion_group, criterion_main};
 use std::hint::black_box;
 
-use bio::io::fastq as bio_fq;
-use criterion::{Criterion, criterion_group, criterion_main};
-use noodles_fastq::io as noodle_fq;
-
+const SAMPLE_SIZE: usize = 10;
 const LR_PATH: &str = "data/GM24385_1_subset.fastq";
 const LR_PATH_GZ: &str = "data/GM24385_1_subset.fastq.gz";
 const SR_PATH: &str = "data/D1_S1_L001_R1_001_subset.fastq";
@@ -13,7 +11,7 @@ const SR_PATH_GZ: &str = "data/D1_S1_L001_R1_001_subset.fastq.gz";
 
 fn bench_lrfq_parser(c: &mut Criterion) {
     let mut group = c.benchmark_group("LRFQ parser");
-    group.sample_size(50);
+    group.sample_size(SAMPLE_SIZE);
 
     group.bench_function("bio", |b| b.iter(|| bio_parse(black_box(LR_PATH))));
     group.bench_function("noodles", |b| b.iter(|| noodles_parse(black_box(LR_PATH))));
@@ -21,12 +19,15 @@ fn bench_lrfq_parser(c: &mut Criterion) {
     group.bench_function("noodles_gz", |b| {
         b.iter(|| noodles_parse(black_box(LR_PATH_GZ)))
     });
+    // fastq_parse was failed to read LR data since read is too long
+
+
     group.finish();
 }
 
 fn bench_srfq_parser(c: &mut Criterion) {
     let mut group = c.benchmark_group("SRFQ parser");
-    group.sample_size(50);
+    group.sample_size(SAMPLE_SIZE);
 
     group.bench_function("bio", |b| b.iter(|| bio_parse(black_box(SR_PATH))));
     group.bench_function("noodles", |b| b.iter(|| noodles_parse(black_box(SR_PATH))));
@@ -34,31 +35,35 @@ fn bench_srfq_parser(c: &mut Criterion) {
     group.bench_function("noodles_gz", |b| {
         b.iter(|| noodles_parse(black_box(SR_PATH_GZ)))
     });
+    group.bench_function("fastq", |b| b.iter(|| fastq_parse(black_box(SR_PATH))));
+    group.bench_function("fastq_gz", |b| {
+        b.iter(|| fastq_parse(black_box(SR_PATH_GZ)))
+    });
     group.finish();
 }
 
-fn bio_parse(path: &str) -> Result<(), std::io::Error> {
-    let reader = open_bufreader(path).map(bio_fq::Reader::new)?;
-    let mut nc_count = NCount::new();
+fn bench_srfq_fastq_nthread(c: &mut Criterion) {
+    let mut group = c.benchmark_group("SRFQ parser");
+    group.sample_size(SAMPLE_SIZE);
 
-    for record in reader.records() {
-        let result = record.unwrap();
-        result.seq().iter().for_each(|c| nc_count.add(c));
-    }
-    // nc_count.print();
-    Ok(())
+    group.bench_function("fastq", |b| b.iter(|| fastq_parse(black_box(SR_PATH))));
+    group.bench_function("fastq_gz", |b| {
+        b.iter(|| fastq_parse(black_box(SR_PATH_GZ)))
+    });
+    group.bench_function("fastq t=2", |b| {
+        b.iter(|| fastq_parallel_parse(black_box(SR_PATH), black_box(2)))
+    });
+    group.bench_function("fastq_gz t=2", |b| {
+        b.iter(|| fastq_parallel_parse(black_box(SR_PATH_GZ), black_box(2)))
+    });
+    group.bench_function("fastq t=4", |b| {
+        b.iter(|| fastq_parallel_parse(black_box(SR_PATH), black_box(4)))
+    });
+    group.bench_function("fastq_gz t=4", |b| {
+        b.iter(|| fastq_parallel_parse(black_box(SR_PATH_GZ), black_box(4)))
+    });
+    group.finish();
 }
 
-fn noodles_parse(path: &str) -> Result<(), std::io::Error> {
-    let mut reader = open_bufreader(path).map(noodle_fq::Reader::new)?;
-    let mut nc_count = NCount::new();
-    for record in reader.records() {
-        let result = record?;
-        result.sequence().iter().for_each(|c| nc_count.add(c));
-    }
-    // nc_count.print();
-    Ok(())
-}
-
-criterion_group!(benches, bench_lrfq_parser, bench_srfq_parser);
+criterion_group!(benches, bench_srfq_fastq_nthread);
 criterion_main!(benches);

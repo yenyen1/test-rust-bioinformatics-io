@@ -1,15 +1,32 @@
 # FASTX I/O Benchmark Report
 
 This report summarizes the performance benchmarks for the project using `Criterion.rs`.
-Benchmark the performance of reading a FASTX file consecutively. 
+Benchmark the performance of reading a FASTX file exhausted. 
 
 
 ## FASTX libraries
 
-- **bio**: bio::io v3.0.0
-- **noodles**: 
-    - noodles-fasta v0.57.0
-    - noodles-fastq v0.21.0
+| Crate | Version | FASTA | FASTQ | Faidx | FASTX | Async | Parallel | RecordBuffer | FASTXRecord | SR | LR | 
+|:-----:|:-------:|:-----:|:-----:|:-----:|:-----:|:-----:|:--------:|:------------:|:-----------:|:--:|:--:|
+| bio::io       | v3.0.0  | V | V | V | V |  |  |  | V | V | V |
+| noodles-fasta | v0.57.0 | V |   | V |  | V |  |  |  | V | V | 
+| noodles-fastq | v0.21.0 |   | V | V |  | V |  |  |  | V | V |
+| fastq         | v0.6.0 |  | V |  | V |  | V |  |  | V |  |
+| seq_io        | v0.3.4 | V | V |  | V |  | V |  |
+| fxread        | v | V | V |  |  | V |  |  | 
+| needletail    | v |  |  |
+| kseq          | v |  |  |
+| rust-htslib   | v |  |  |
+
+
+- **FASTA** : FASTA reader and writer.  
+- **FASTQ** : FASTQ reader and writer.
+- **Faidx** : FASTA reader with an index created by SAMtools ( `.fai` ).
+- **FASTX** : Automatically detects the right reader (FASTA or FASTQ).
+- **Parallel** : Support a function to read records in a different thread.
+- **Async** : Support Async.
+- **FASTXRecord**: The crate provide traits or utilities to read and write FASTA and FASTQ interchangably when the type of a file is not known at compile time.
+
 
 ## Datasets
 
@@ -68,7 +85,11 @@ Benchmark the performance of reading a FASTX file consecutively.
 
 ## Result 1: FASTA data
 
-Configure `Criterion` with a `sample_size` (number of iterations) of 30 for this benchmark. 
+- test with own FASTX detecter or the lib provide FASTX detecter?
+
+Benchmark the performance of reading a FASTA file exhausted and calculate the number of bases for each each nucleotides (ACTGN).
+
+- Configure `Criterion` with a `sample_size` (number of iterations) of 30 for this benchmark. 
 
 ### Summary Table
 
@@ -103,6 +124,8 @@ Configure `Criterion` with a `sample_size` (number of iterations) of 30 for this
     ![SR_FASTA](plots/env2_violin_SRFA.svg)
 
 ## Result 2: FASTQ data
+
+- **fastq** failed when running LR dataset with error message: Custom { kind: InvalidData, error: "Fastq record is too long" }. Fastq can run multiple threads by defining RecordSets.
 
 ### Summary Table
 | Environment | Read Type | Benchmark | Compressed | Mean Time | Std Dev | Median Time | MAD |
