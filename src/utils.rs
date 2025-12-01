@@ -1,7 +1,7 @@
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 
-use flate2::read::GzDecoder;
+use flate2::read::MultiGzDecoder;
 
 // ASCII to ACGTN
 // A|a: 0 ; C|c:1 ; G|g:2 ; T|t:3 ; other: 4
@@ -27,6 +27,9 @@ impl NCount {
     }
     pub fn add(&mut self, c: &u8, count: u64) {
         self.data[ASCII_TO_ACGTN_IDX[*c as usize]] += count;
+    }
+    pub fn get(&mut self) -> &[u64; 5] {
+        &self.data
     }
     pub fn get_from_idx(&self, idx: usize) -> u64 {
         self.data[idx]
@@ -58,7 +61,7 @@ pub fn merge_nc_count(counts: &mut Vec<NCount>) -> Option<NCount> {
 pub fn open_bufreader(path: &str) -> Result<Box<dyn BufRead>, std::io::Error> {
     let file = File::open(path)?;
     if path.ends_with(".gz") {
-        let decoder = GzDecoder::new(file);
+        let decoder = MultiGzDecoder::new(file);
         Ok(Box::new(BufReader::new(decoder)))
     } else {
         Ok(Box::new(BufReader::new(file)))

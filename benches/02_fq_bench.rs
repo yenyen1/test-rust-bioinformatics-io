@@ -1,4 +1,4 @@
-use test_parser::fastq_parser::{bio_parse, fastq_parallel_parse, fastq_parse, noodles_parse};
+use test_bioinformatics_io::fastq_parser::{bio_parse, bio_test_file_parse, fastq_parallel_parse, fastq_parse, noodles_parse};
 
 use criterion::{Criterion, criterion_group, criterion_main};
 use std::hint::black_box;
@@ -42,6 +42,20 @@ fn bench_srfq_parser(c: &mut Criterion) {
     group.finish();
 }
 
+/// To check automatical compression detection function
+/// fastq::parse_path is more stable than and better performance than detect file type with file path (utils::open_bufreader).
+fn bench_auto_reader(c: &mut Criterion) {
+    let mut group = c.benchmark_group("auto reader");
+    group.sample_size(SAMPLE_SIZE);
+
+    group.bench_function("bio", |b| b.iter(|| bio_test_file_parse(black_box(SR_PATH))));
+    group.bench_function("bio_gz", |b| b.iter(|| bio_test_file_parse(black_box(SR_PATH_GZ))));
+
+    group.finish();
+}
+
+/// The performance improved by adding threads for Uncompressed FASTQ.
+/// However, for compressed FASTQ, the performance of multi-threads was worser than single threads.
 fn bench_srfq_fastq_nthread(c: &mut Criterion) {
     let mut group = c.benchmark_group("SRFQ parser");
     group.sample_size(SAMPLE_SIZE);
@@ -65,5 +79,5 @@ fn bench_srfq_fastq_nthread(c: &mut Criterion) {
     group.finish();
 }
 
-criterion_group!(benches, bench_srfq_fastq_nthread);
+criterion_group!(benches, bench_auto_reader);
 criterion_main!(benches);

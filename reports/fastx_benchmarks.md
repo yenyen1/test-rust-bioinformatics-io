@@ -6,13 +6,13 @@ Benchmark the performance of reading a FASTX file exhausted.
 
 ## FASTX libraries
 
-| Crate | Version | FASTA | FASTQ | Faidx | FASTX | Async | Parallel | RecordBuffer | FASTXRecord | SR | LR | 
-|:-----:|:-------:|:-----:|:-----:|:-----:|:-----:|:-----:|:--------:|:------------:|:-----------:|:--:|:--:|
-| bio::io       | v3.0.0  | V | V | V | V |  |  |  | V | V | V |
-| noodles-fasta | v0.57.0 | V |   | V |  | V |  |  |  | V | V | 
-| noodles-fastq | v0.21.0 |   | V | V |  | V |  |  |  | V | V |
-| fastq         | v0.6.0 |  | V |  | V |  | V |  |  | V |  |
-| seq_io        | v0.3.4 | V | V |  | V |  | V |  |
+| Crate | Version | FASTA | FASTQ | Faidx | FASTX | Async | Parallel | Auto Compression detection | SR | LR | multi-line FASTA |
+|:-----:|:-------:|:-----:|:-----:|:-----:|:-----:|:-----:|:--------:|:--------------------------:|:--:|:--:|:----------------:|
+| bio::io       | v3.0.0  | V | V | V | Record |   |   |   | V | V | V |
+| noodles-fasta | v0.57.0 | V |   | V |        | V |   |   | V | V | V |
+| noodles-fastq | v0.21.0 |   | V | V |        | V |   |   | V | V |   |
+| fastq         | v0.6.0  |   | V |   | V |   | V | gzip, lz4 | V |   |   |
+| seq_io        | v0.3.4  | V | V |   | V |   | V |  |   |   | V | V |
 | fxread        | v | V | V |  |  | V |  |  | 
 | needletail    | v |  |  |
 | kseq          | v |  |  |
@@ -26,7 +26,7 @@ Benchmark the performance of reading a FASTX file exhausted.
 - **Parallel** : Support a function to read records in a different thread.
 - **Async** : Support Async.
 - **FASTXRecord**: The crate provide traits or utilities to read and write FASTA and FASTQ interchangably when the type of a file is not known at compile time.
-
+- **multi-line FASTA**: FASTA parser can read and write multi-line files.
 
 ## Datasets
 
@@ -125,7 +125,7 @@ Benchmark the performance of reading a FASTA file exhausted and calculate the nu
 
 ## Result 2: FASTQ data
 
-- **fastq** failed when running LR dataset with error message: Custom { kind: InvalidData, error: "Fastq record is too long" }. Fastq can run multiple threads by defining RecordSets.
+- **fastq** failed when running LR dataset with error message: Custom { kind: InvalidData, error: "Fastq record is too long" }. Fastq can run multiple threads by defining RecordSets. 
 
 ### Summary Table
 | Environment | Read Type | Benchmark | Compressed | Mean Time | Std Dev | Median Time | MAD |

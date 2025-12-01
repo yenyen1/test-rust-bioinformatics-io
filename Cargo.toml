@@ -1,5 +1,5 @@
 [package]
-name = "test-parser"
+name = "test-bioinformatics-io"
 version = "0.1.0"
 edition = "2024"
 
@@ -8,16 +8,22 @@ bam = "0.1.4"
 bio = "3.0.0"
 clap = { version = "4.5.51", features = ["derive"] }
 criterion = "0.7.0"
+fastq = "0.6.0"
 flate2 = "1.1.5"
 noodles-bam = "0.84.0"
 noodles-fasta = "0.57.0"
 noodles-fastq = "0.21.0"
 rust-htslib = "0.51.0"
+seq_io = "0.3.4"
 
 [[bench]]
 name = "01_fa_bench"
 harness = false
 
-[[bench]]
-name = "02_fq_bench"
-harness = false
+# [[bench]]
+# name = "02_fq_bench"
+# harness = false
+
+# [[bench]]
+# name = "03_bam_bench"
+# harness = false
