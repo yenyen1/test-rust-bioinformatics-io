@@ -62,8 +62,7 @@ pub fn fastq_parallel_parse(path: &str, n_threads: usize) -> std::io::Result<NCo
                 nc_count
             })
             .expect("fastq parallel_each failed...");
-        let merged = merge_nc_count(&mut results).expect("fastq parallel_each merge result failed");
-        merged
+        merge_nc_count(&mut results).expect("fastq parallel_each merge result failed")
     })
 }
 

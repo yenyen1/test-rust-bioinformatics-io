@@ -1,9 +1,9 @@
-use criterion::{Criterion, criterion_group, criterion_main};
-use std::hint::black_box;
 use benchmark_fastx_io::fasta_parser::{
     bio_parse, noodles_parse, seq_io_parallel_parse, seq_io_parse,
 };
 use benchmark_fastx_io::fastq_parser::{fxread_parse, kseq_parse, needletail_parse};
+use criterion::{Criterion, criterion_group, criterion_main};
+use std::hint::black_box;
 
 const SAMPLE_SIZE: usize = 30;
 const LR_PATH: &str = "data/GM24385_1_subset.fasta";
