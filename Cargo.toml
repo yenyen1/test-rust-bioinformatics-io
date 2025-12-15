@@ -7,39 +7,25 @@ edition = "2024"
 bam = "0.1.4"
 bio = "3.0.0"
 kseq = "0.5.3"
-noodles-bam = "0.84.0"
 noodles-fasta = "0.57.0"
 noodles-fastq = "0.21.0"
 seq_io = "0.3.4"
 
-# exclude C binding
+# avoid C binding
 fxread = { version = "0.2.14", default-features = false }
 fastq = { version = "0.6.0", default-features = false }
 needletail = { version = "0.6.3", default-features = false, features = ["flate2"] }
 flate2 = { version = "1.1.5", default-features = false, features = ["zlib-rs"] }
-buffer-redux = { version = "1", default-features = false }
-bytecount = { version = "0.6", features = ["runtime-dispatch-simd"] }
-memchr = "2.7.2"
 
-# exclude lzma
-rust-htslib = { version = "0.51.0", default-features = false }
-hts-sys = { version = "2.2.0", default-features = false }
-
-[features]
-default = []
 
 [dev-dependencies]
-# benchmark
 criterion = "0.8.0"
 
-[[bench]]
-name = "01_fa_bench"
-harness = false
+# [[bench]]
+# name = "01_fa_bench"
+# harness = false
 
 [[bench]]
 name = "02_fq_bench"
 harness = false
 
-# [[bench]]
-# name = "03_bam_bench"
-# harness = false

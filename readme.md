@@ -1,18 +1,10 @@
-# Benchmark bioinformatics I/O libraries in Rust
+# Benchmark FASTA/FASTQ IO crates in Rust
 
-Even with identical hardware and the same operating system, I/O performance can vary widely depending on how the code is written. Factors such as the number of memory copies, frequency of system calls, use of memory-mapped and lazy loading. These differences can all introduce significant variation in overall runtime, especially when working with large files.
+There are many crates on `crates.io` for reading FASTA/FASTQ data. Some crates are more general-purpose and provide a wide range of features, such as async support and indexed FASTA support. Others are more specialized, focusing on specific use cases. For example, some crates accelerate full-file iteration by reducing unnecessary checks and minimizing data copies; others provide multi-threaded processing; and some automatically detect FASTA/FASTQ formats and compressed file types and return the appropriate readers.
 
-There are many bioinformatics I/O libraries in `crates.io`. The goal here is to evaluate how these libraries perform from a user’s point of view. This includes comparing their execution time in common scenarios such as iterating over the entire dataset and performing analysis for each records. I observabled performance rather than low-level implementation details.
+Depanding on how the code is written, the runtime can vary due to factors such as the number of memory copies, the frequency of system calls, and the use of memory-mapped or lazy loading techniques. It is not practical to inspect every crate in detail. Instead, I summarize their features and benchmark their performance from a user’s perspective, serving as a reference to help choose the appropriate crate for different use cases.
 
-
-**Reports:**
-- [Benchmarking FASTX I/O Readers (bio, noodles)](reports/fastx_benchmarks.md)
-- [Benchmarking BAM I/O Readers (rust-htslib, noodles, bam)](reports/bam_benchmarks.md)
-
-## Bioinformatics I/O libraries in crates.io
-
-Compare the following I/O libraries published on `crates.io`:
-
+### FASTA/FASTQ Crates
 - **bio**: https://crates.io/crates/bio (FASTA/FASTQ)
 - **fastq**: https://crates.io/crates/fastq (FASTQ)
 - **seq-io**: https://crates.io/crates/seq_io (FASTA/FASTQ)
@@ -20,16 +12,11 @@ Compare the following I/O libraries published on `crates.io`:
 - **needletail**: https://crates.io/crates/needletail (FASTA/FASTQ)
 - **kseq**: https://crates.io/crates/kseq (FASTA/FASTQ)
 - **noodles**: https://crates.io/crates/noodles (FASTA/FASTQ, SAM/BAM/CRAM, VCF/BCF)
-- **rust-htslib**: https://crates.io/crates/rust-htslib (FASTA, SAM/BAM/CRAM, VCF/BCF)
-- **bam**: https://crates.io/crates/bam (BAM)
 
-
-## Dataset
-
-This repository uses sequencing data from Genome in a Bottle (GIAB) project. AshkenazimTrio son (HG002):
-- **GIAB**: [https://ftp.ncbi.nlm.nih.gov/ReferenceSamples/giab/data/AshkenazimTrio/HG002_NA24385_son/](https://ftp.ncbi.nlm.nih.gov/ReferenceSamples/giab/data/AshkenazimTrio/HG002_NA24385_son/)
-
-The alignments use GRCh38: 
-- **GRCh38**: [https://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/001/405/GCA_000001405.15_GRCh38/seqs_for_alignment_pipelines.ucsc_ids/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.gz](https://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/001/405/GCA_000001405.15_GRCh38/seqs_for_alignment_pipelines.ucsc_ids/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.gz)
-
+### Reports
+- [Dataset Preparation](reports/datasets.md) : Benchmarking was performed using real sequencing data from the GIAB project.
+- [Benchmark Environment](reports/environment.md)
+- [Summary of Features in FASTA/FASTQ Crates](reports/fastx_benchmarks.md#summary-of-fastx-features)
+- [Benchmark Report for FASTA Readers](reports/fastx_benchmarks.md#fasta-reader-report) : comparing their average runtime when iterating through an entire FASTA file.
+- [Benchmark Report for FASTQ Readers](reports/fastx_benchmarks.md#fasta-reader-report) : comparing their average runtime when iterating through an entire FASTQ file.
 

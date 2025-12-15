@@ -53,11 +53,11 @@ mod tests {
 
         let nc_count = seq_io_parallel_parse(LR_PATH, 2);
         assert_eq!(&LR_COUNT, nc_count.unwrap().get());
-        let nc_count = seq_io_parallel_parse(LR_PATH_GZ,2);
+        let nc_count = seq_io_parallel_parse(LR_PATH_GZ, 2);
         assert_eq!(&LR_COUNT, nc_count.unwrap().get());
-        let nc_count = seq_io_parallel_parse(SR_PATH,2);
+        let nc_count = seq_io_parallel_parse(SR_PATH, 2);
         assert_eq!(&SR_COUNT, nc_count.unwrap().get());
-        let nc_count = seq_io_parallel_parse(SR_PATH_GZ,2);
+        let nc_count = seq_io_parallel_parse(SR_PATH_GZ, 2);
         assert_eq!(&SR_COUNT, nc_count.unwrap().get());
     }
 

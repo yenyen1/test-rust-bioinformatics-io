@@ -1,10 +1,10 @@
 use crate::utils::{NCount, open_bufreader};
 
-use std::io;
 use bio::io::fasta as bio_fa;
 use noodles_fasta::io as noodle_fa;
 use seq_io::fasta as seq_io_fa;
 use seq_io::parallel as seq_io_parallel;
+use std::io;
 
 pub fn noodles_parse(path: &str) -> io::Result<NCount> {
     let mut reader = open_bufreader(path).map(noodle_fa::Reader::new)?;
@@ -65,5 +65,3 @@ pub fn seq_io_parallel_parse(path: &str, n_threads: u32) -> io::Result<NCount> {
     );
     Ok(out)
 }
-
-
