@@ -33,12 +33,12 @@ This report summarizes the average runtime measured with `Criterion.rs` (sample 
 
 | library | LR_FA_E1 | LR_GZ_E1 | SR_FA_E1 | SR_GZ_E1 | LR_FA_E2 | LR_GZ_E2 | SR_FA_E2 | SR_GZ_E2 | 
 |:-------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:-------:|:--------:|
-| bio:io     | 2.20s | 4.58s | 4.14s | 7.60s |  |  |  |  |
-| noodles    | 2.26s | 4.62s | 5.70s | 9.18s |  |  |  |  |
-| seq_io     | <span style="color:green">1.98s</span> | <span style="color:green">3.84s</span> | <span style="color:green">2.58s</span> | <span style="color:green">5.36s</span> |  |  |  |  |
-| fxread     | 2.16s | 4.50s | 3.70s | 7.07s |  |  |  |  |
-| needletail | <span style="color:green">2.00s</span> | <span style="color:green">3.90s</span> | <span style="color:green">2.61s</span> | <span style="color:green">5.45s</span> |  |  |  |  |
-| kseq       | <span style="color:green">2.02s</span> | <span style="color:green">3.92s</span> | 2.96s | 5.69s |  |  |  |  |
+| bio:io     | 2.20s | 4.58s | 4.14s | 7.60s | 1.21s | 3.13s | 2.54s | 5.35s |
+| noodles    | 2.26s | 4.62s | 5.70s | 9.18s | 1.24s | 3.11s | 3.73s | 6.87s |
+| seq_io     | <span style="color:green">1.98s</span> | <span style="color:green">3.84s</span> | <span style="color:green">2.58s</span> | <span style="color:green">5.36s</span> | 0.99s | 2.43s | 1.43s | 3.60s |
+| fxread     | 2.16s | 4.50s | 3.70s | 7.07s | 1.20s | 3.08s | 2.28s | 5.05s |
+| needletail | <span style="color:green">2.00s</span> | <span style="color:green">3.90s</span> | <span style="color:green">2.61s</span> | <span style="color:green">5.45s</span> | 1.00s | 2.45s | 1.52s | 3.69s |
+| kseq       | <span style="color:green">2.02s</span> | <span style="color:green">3.92s</span> | 2.96s | 5.69s | 1.06s | 2.61s | 1.85s | 4.11s |
 <br>
 
 - [FASTA Violin Plots](fastx_plots.md#fasta-violin-plots)
@@ -54,13 +54,13 @@ This report summarizes the average runtime measured with `Criterion.rs` (sample 
 
 | library | LR_FQ_E1 | LR_GZ_E1 | SR_FQ_E1 | SR_GZ_E1 | LR_FQ_E2 | LR_GZ_E2 | SR_FQ_E2 | SR_GZ_E2 | 
 |:-------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:-------:|:--------:|
-| bio:io     | 2.57s | 9.46s | 4.95s | 12.44s |  |  |  |  |
-| noodles    | 2.50s | 9.35s | 4.59s | 12.05s |  |  |  |  |
-| seq_io     | 2.09s | 8.24s | 2.79s |  8.93s |  |  |  |  |
-| fxread     | 2.41s | 9.30s | 4.07s | 11.53s |  |  |  |  |
-| needletail | 2.09s | 8.25s | 2.85s |  8.98s |  |  |  |  |
-| kseq       | 2.15s | 8.34s | 3.36s |  9.33s |  |  |  |  |
-| fastq      |   -   |   -   | 2.82s |  6.15s |  |  |  |  |
+| bio:io     | 2.57s | 9.46s | 4.95s | 12.44s | 1.58s | 7.26s | 3.40s | 9.41s |
+| noodles    | 2.50s | 9.35s | 4.59s | 12.05s | 1.57s | 7.29s | 2.88s | 8.88s |
+| seq_io     | 2.09s | 8.24s | 2.79s |  8.93s | 1.16s | 6.18s | 1.72s | 6.67s |
+| fxread     | 2.41s | 9.30s | 4.07s | 11.53s | 1.49s | 7.27s | 2.77s | 8.76s |
+| needletail | 2.09s | 8.25s | 2.85s |  8.98s | 1.15s | 6.18s | 1.80s | 6.70s |
+| kseq       | 2.15s | 8.34s | 3.36s |  9.33s | 1.23s | 6.27s | 2.28s | 7.37s |
+| fastq      |   -   |   -   | 2.82s |  6.15s |   -   |   -   | 1.82s | 4.90s |
 <br>
 
 - [FASTQ Violin Plots](fastx_plots.md#fastq-violin-plots)
